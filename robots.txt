@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://directory.dynamiceldorado.com/sitemap.xml
