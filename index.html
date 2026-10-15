@@ -114,7 +114,7 @@ footer{border-top:1px solid var(--line);padding-block:18px 30px;font-size:13px;c
     root.appendChild(el("div",{class:"bar"},[el("div",{class:"wrap"},[search,gRow,tRow,aRow])]));
     var main=el("main",{},[el("div",{class:"wrap"},[el("div",{id:"results"}),suggestSection()])]);
     root.appendChild(main);
-    root.appendChild(el("footer",{},[el("div",{class:"wrap"},[el("p",{text:"Listings are checked against public sources and updated regularly. Details change: confirm dates and prices with the venue before you go. Performers are listed only when they submit themselves."})])]));
+    root.appendChild(el("footer",{},[el("div",{class:"wrap"},[el("p",{text:"Listings are checked against public sources and updated regularly. Details change: confirm dates and prices with the venue before you go. Performers are listed only when they submit themselves."}),el("p",{},["What's on this weekend? See the ",el("a",{href:"https://guide.dynamiceldorado.com/"},["Live Comedy Guide"]),"."])])]));
     renderResults();
   }
   function renderResults(){
@@ -181,6 +181,11 @@ footer{border-top:1px solid var(--line);padding-block:18px 30px;font-size:13px;c
       dbApi.collection("submissions").doc(slug(v.name)+"-"+Date.now()).set(body).then(function(){status.textContent="Sent. It's in the review inbox now.";direct.disabled=false},function(err){direct.disabled=false;status.textContent=(err&&(err.code==="invalid_argument"||err.code==="not_granted"))?"Your access level can't submit directly. Use Copy instead and reply to the newsletter.":"Couldn't send ("+((err&&err.code)||"error")+"). Try Copy instead."});
     }}},["Submit for review"]);
     if(!state.canSubmit)direct.hidden=true;
+    if(!state.canSubmit){
+      return el("section",{class:"suggest",id:"suggest"},[el("h2",{text:"Suggest a listing"}),
+        el("p",{style:"margin:0 0 14px;max-width:65ch",text:"Run a show, a mic, a troupe, a class or a podcast? Performing in Atlanta and want to be listed? Tell us about it. It's free, and every listing gets checked before it goes up."}),
+        el("a",{class:"btn gold",href:"https://docs.google.com/forms/d/e/1FAIpQLSdmeltLBWwirmeO_R6KCv9PdUNMEizfonqVJX2pDmcGjky0cQ/viewform",target:"_blank",rel:"noopener",style:"display:inline-block;text-decoration:none"},["Got a thing we should add here? Let us know about it!"])]);
+    }
     return el("section",{class:"suggest",id:"suggest"},[el("h2",{text:"Suggest a listing"}),
       el("p",{style:"margin:0;max-width:65ch",text:state.canSubmit?"Run a show, a mic, a troupe, a class or a podcast? Fill this in and submit it for review. Every listing gets checked before it goes up.":"Run a show, a mic, a troupe, a class or a podcast? Performing in Atlanta and want to be listed? Fill this in, copy it, and reply to any issue of the Live Comedy (cheap!) newsletter. Every listing gets checked before it goes up."}),
       fs.node,el("div",{class:"row",style:"margin-top:12px"},[direct,make]),out,status]);
