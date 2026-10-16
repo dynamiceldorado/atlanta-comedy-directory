@@ -37,7 +37,8 @@ def ig_href(v):
 def card(it):
     name = e(it["name"])
     title = f'<a href="{e(it["url"])}" target="_blank" rel="noopener">{name}</a>' if it.get("url") else name
-    out = [f'<article class="card"><h3>{title}</h3>']
+    g0 = (it.get("genres") or [None])[0]
+    out = [f'<article class="card{" g-" + g0 if g0 else ""}"><h3>{title}</h3>']
     if it.get("where"):
         out.append(f'<div class="where">{e(it["where"])}</div>')
     if it.get("ig"):
@@ -69,7 +70,7 @@ def prerender(data):
         group = sorted((i for i in items if i.get("type") == key), key=lambda i: i["name"].lower())
         if not group:
             continue
-        parts.append(f'<section class="group"><h2>{e(label)} <small>{len(group)}</small></h2><div class="grid">')
+        parts.append(f'<section class="group"><div class="grid"><h2>{e(label)} <small>{len(group)}</small></h2>')
         parts.extend(card(i) for i in group)
         parts.append("</div></section>")
     parts.append('</div><section class="suggest"><h2>Suggest a listing</h2>'
