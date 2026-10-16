@@ -63,9 +63,11 @@ def card(it):
 
 
 NAV = ('<nav class="topnav" aria-label="Dynamic El Dorado sites"><div class="wrap">'
-       '<a class="home" href="https://dynamiceldorado.com/">Dynamic El Dorado</a>'
-       '<a href="https://directory.dynamiceldorado.com/" aria-current="page">Directory</a>'
-       f'<a href="{GUIDE}">Live Comedy Guide</a></div></nav>')
+       '<a class="home" href="https://dynamiceldorado.com/" aria-label="Dynamic El Dorado"><img src="logo.png" alt="Dynamic El Dorado" width="107" height="34"></a>'
+       '<span class="presents">presents:</span>'
+       f'<a href="{GUIDE}">Live Comedy (cheap!)</a>'
+       '<a href="https://squareup.com/customer-programs/enroll/tdb8t92f3zVq">Newsletter</a>'
+       f'<a href="{FORM}" target="_blank" rel="noopener">Submit your info!</a></div></nav>')
 FOOTNAV = ('<ul class="footnav">'
            '<li><a href="https://dynamiceldorado.com/">Dynamic El Dorado</a></li>'
            '<li><a href="https://directory.dynamiceldorado.com/">Directory</a></li>'
@@ -77,9 +79,6 @@ FOOTNAV = ('<ul class="footnav">'
 def prerender(data):
     items = data["items"]
     parts = [NAV + '<header class="mast"><div class="wrap">'
-             '<div class="mast-brand"><div class="presented">Presented by</div>'
-             '<a href="https://dynamiceldorado.com/"><img src="logo.png" alt="Dynamic El Dorado" width="150" height="48"></a>'
-             '<a class="btn gold" href="https://squareup.com/customer-programs/enroll/tdb8t92f3zVq">Get the newsletter</a></div>'
              '<h1>Atlanta Comedy <span>Directory</span></h1>'
              '<p class="lede">Where to see it, learn it and do it: the theaters, troupes, open mics, classes, '
              "podcasts and festivals that make up Atlanta's comedy scene, inside and outside the Perimeter.</p>"
