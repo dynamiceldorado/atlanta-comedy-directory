@@ -39,6 +39,16 @@ def card(it):
     title = f'<a href="{e(it["url"])}" target="_blank" rel="noopener">{name}</a>' if it.get("url") else name
     g0 = (it.get("genres") or [None])[0]
     out = [f'<article class="card{" g-" + g0 if g0 else ""}"><h3>{title}</h3>']
+    # Genre/area line comes right under the name, matching the interactive card
+    tags = []
+    if it.get("area"):
+        full = "Outside the Perimeter (I-285)" if it["area"] == "OTP" else "Inside the Perimeter (I-285)"
+        tags.append(f'<abbr class="area{" otp" if it["area"] == "OTP" else ""}" title="{full}">{e(it["area"])}</abbr>')
+    for g in it.get("genres") or []:
+        label, var = GENRES.get(g, (g, "--other"))
+        tags.append(f'<span class="tag"><span class="sq" aria-hidden="true" style="background:var({var})"></span>{e(label)}</span>')
+    if tags:
+        out.append(f'<div class="tags">{"".join(tags)}</div>')
     if it.get("where"):
         out.append(f'<div class="where">{e(it["where"])}</div>')
     if it.get("ig"):
@@ -46,23 +56,30 @@ def card(it):
         label = "Instagram" if v.startswith("http") else "@" + v.lstrip("@")
         out.append(f'<div class="where"><a href="{e(ig_href(v))}" target="_blank" rel="noopener">{e(label)}</a></div>')
     if it.get("note"):
+        # Full text in the static copy (for search engines); the page script clamps it to 2 lines
         out.append(f'<p class="note">{e(it["note"])}</p>')
-    tags = []
-    if it.get("area"):
-        tags.append(f'<span class="area{" otp" if it["area"] == "OTP" else ""}">{e(it["area"])}</span>')
-    for g in it.get("genres") or []:
-        label, var = GENRES.get(g, (g, "--other"))
-        tags.append(f'<span class="tag"><span class="sq" aria-hidden="true" style="background:var({var})"></span>{e(label)}</span>')
-    out.append(f'<div class="tags">{"".join(tags)}</div></article>')
+    out.append('</article>')
     return "".join(out)
+
+
+NAV = ('<nav class="topnav" aria-label="Dynamic El Dorado sites"><div class="wrap">'
+       '<a class="home" href="https://dynamiceldorado.com/">Dynamic El Dorado</a>'
+       '<a href="https://directory.dynamiceldorado.com/" aria-current="page">Directory</a>'
+       f'<a href="{GUIDE}">Live Comedy Guide</a></div></nav>')
+FOOTNAV = ('<ul class="footnav">'
+           '<li><a href="https://dynamiceldorado.com/">Dynamic El Dorado</a></li>'
+           '<li><a href="https://directory.dynamiceldorado.com/">Directory</a></li>'
+           f'<li><a href="{GUIDE}">Live Comedy Guide</a></li>'
+           '<li><a href="https://squareup.com/customer-programs/enroll/tdb8t92f3zVq">Newsletter</a></li>'
+           '<li><a href="https://www.instagram.com/dynamiceldorado/">Instagram</a></li></ul>')
 
 
 def prerender(data):
     items = data["items"]
-    parts = ['<header class="mast"><div class="wrap">'
-             '<div class="mast-brand"><div class="presented">Presented by</div><img src="logo.png" alt="Dynamic El Dorado" width="150" height="48">'
+    parts = [NAV + '<header class="mast"><div class="wrap">'
+             '<div class="mast-brand"><div class="presented">Presented by</div>'
+             '<a href="https://dynamiceldorado.com/"><img src="logo.png" alt="Dynamic El Dorado" width="150" height="48"></a>'
              '<a class="btn gold" href="https://squareup.com/customer-programs/enroll/tdb8t92f3zVq">Get the newsletter</a></div>'
-             '<div class="eyebrow">From Live Comedy (cheap!) · Dynamic El Dorado</div>'
              '<h1>Atlanta Comedy <span>Directory</span></h1>'
              '<p class="lede">Where to see it, learn it and do it: the theaters, troupes, open mics, classes, '
              "podcasts and festivals that make up Atlanta's comedy scene, inside and outside the Perimeter.</p>"
@@ -78,7 +95,7 @@ def prerender(data):
     parts.append('</div><section class="suggest"><h2>Suggest a listing</h2>'
                  '<p>Run a show, a mic, a troupe, a class or a podcast? Performing in Atlanta and want to be listed? '
                  f'<a href="{FORM}">Got a thing we should add here? Let us know about it!</a></p></section>'
-                 '</div></main><footer><div class="wrap"><p>Listings are checked against public sources and updated regularly. '
+                 '</div></main><footer><div class="wrap">' + FOOTNAV + '<p>Listings are checked against public sources and updated regularly. '
                  'Details change: confirm dates and prices with the venue before you go.</p>'
                  f'<p>What\'s on this weekend? See the <a href="{GUIDE}">Live Comedy Guide</a>.</p></div></footer>')
     return "".join(parts)
