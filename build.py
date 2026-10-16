@@ -38,7 +38,10 @@ def card(it):
     name = e(it["name"])
     title = f'<a href="{e(it["url"])}" target="_blank" rel="noopener">{name}</a>' if it.get("url") else name
     g0 = (it.get("genres") or [None])[0]
-    out = [f'<article class="card{" g-" + g0 if g0 else ""}"><h3>{title}</h3>']
+    out = [f'<article class="card{" g-" + g0 if g0 else ""}{" has-img" if it.get("img") else ""}">']
+    if it.get("img"):
+        out.append(f'<img class="thumb" src="{e(it["img"])}" alt="{e(it.get("alt", ""))}" width="100" height="100" loading="lazy">')
+    out.append(f'<h3>{title}</h3>')
     # Genre/area line comes right under the name, matching the interactive card
     tags = []
     if it.get("area"):
