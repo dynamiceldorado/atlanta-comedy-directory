@@ -60,8 +60,10 @@ def card(it):
 def prerender(data):
     items = data["items"]
     parts = ['<header class="mast"><div class="wrap">'
+             '<div class="mast-brand"><img src="logo.png" alt="Dynamic El Dorado" width="150" height="48">'
+             '<a class="btn gold" href="https://squareup.com/customer-programs/enroll/tdb8t92f3zVq">Get the newsletter</a></div>'
              '<div class="eyebrow">From Live Comedy (cheap!) · Dynamic El Dorado</div>'
-             '<h1>Atlanta Comedy <span>Directory</span></h1>'
+             '<h1>Dynamic El Dorado\u2019s Directory of <span>Atlanta Comedy</span></h1>'
              '<p class="lede">Where to see it, learn it and do it: the theaters, troupes, open mics, classes, '
              "podcasts and festivals that make up Atlanta's comedy scene, inside and outside the Perimeter.</p>"
              f'<div class="mast-meta"><span>{len(items)} listings</span><span>Last updated {e(data.get("updated") or "—")}</span></div>'
@@ -83,7 +85,7 @@ def prerender(data):
 
 
 def seo_head(data):
-    ld = {"@context": "https://schema.org", "@type": "ItemList", "name": "Atlanta Comedy Directory",
+    ld = {"@context": "https://schema.org", "@type": "ItemList", "name": "Dynamic El Dorado's Directory of Atlanta Comedy",
           "description": DESC, "url": SITE, "numberOfItems": len(data["items"]),
           "itemListElement": []}
     for n, it in enumerate(sorted(data["items"], key=lambda i: i["name"].lower()), 1):
@@ -96,11 +98,11 @@ def seo_head(data):
         ld["itemListElement"].append({"@type": "ListItem", "position": n, "item": thing})
     ld_json = json.dumps(ld, ensure_ascii=False).replace("<", "\\u003c")
     return ("<!--seo:start-->"
-            "<title>Atlanta Comedy Directory: Theaters, Open Mics, Classes &amp; Troupes</title>"
+            "<title>Dynamic El Dorado&#x27;s Directory of Atlanta Comedy: Theaters, Open Mics, Classes &amp; Troupes</title>"
             f'<meta name="description" content="{e(DESC)}">'
             f'<link rel="canonical" href="{SITE}">'
             '<meta property="og:type" content="website">'
-            '<meta property="og:title" content="Atlanta Comedy Directory">'
+            '<meta property="og:title" content="Dynamic El Dorado&#x27;s Directory of Atlanta Comedy">'
             f'<meta property="og:description" content="{e(DESC)}">'
             f'<meta property="og:url" content="{SITE}">'
             '<meta property="og:site_name" content="Dynamic El Dorado">'
