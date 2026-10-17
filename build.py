@@ -83,9 +83,7 @@ def prerender(data):
     items = data["items"]
     parts = [NAV + '<header class="mast"><div class="wrap">'
              '<h1>Atlanta Comedy <span>Directory</span></h1>'
-             '<p class="lede">Atlanta has a lot of comedy and a lot of beautiful people watching it. '
-             "Here's where to see it, learn it and do it: the theaters, troupes, open mics, classes, "
-             "podcasts and festivals that make up the scene.</p>"
+             "<p class=\"lede\">A guide to Atlanta comedy for smart, sexy people who don’t like to think. We picked out the best shows, classes, and festivals so your beautiful, empty head doesn't have to. Brought to you by Dynamic El Dorado and some random people who gave us random drugs. If you're ugly, please stop reading this. If you're dumb, we would love some comp tickets to your show.</p>"
              f'<div class="mast-meta"><span>{len(items)} listings</span><span>Last updated {e(data.get("updated") or "—")}</span></div>'
              '</div></header><main><div class="wrap"><div id="results">']
     for key, label in TYPES:
