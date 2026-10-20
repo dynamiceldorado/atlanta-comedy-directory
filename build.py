@@ -21,9 +21,21 @@ GUIDE = "https://guide.dynamiceldorado.com/"
 GENRES = {"clown": ("Clown", "--clown"), "burlesque": ("Burlesque", "--burlesque"),
           "standup": ("Stand-up", "--standup"), "improv": ("Improv", "--improv"),
           "sketch": ("Sketch", "--sketch"), "variety": ("Variety & theater", "--other")}
-TYPES = [("venue", "Theaters & clubs"), ("show", "Shows & troupes"), ("openmic", "Open mics & jams"),
-         ("classes", "Classes & schools"), ("podcast", "Podcasts"), ("festival", "Festivals"),
-         ("performer", "Performers"), ("resource", "Calendars & resources")]
+# Section titles and order come from sections.json (edited from the Comedy Database sheet).
+# DEFAULT_TYPES is the fallback if that file is missing.
+DEFAULT_TYPES = [("venue", "Theaters & clubs"), ("show", "Shows & troupes"), ("openmic", "Open mics & jams"),
+                 ("classes", "Classes & schools"), ("podcast", "Podcasts"), ("festival", "Festivals"),
+                 ("performer", "Performers"), ("resource", "Calendars & resources")]
+
+
+def load_sections():
+    path = ROOT / "sections.json"
+    if path.exists():
+        rows = json.loads(path.read_text(encoding="utf-8"))
+    else:
+        rows = [{"key": k, "order": n, "title": t, "active": True} for n, (k, t) in enumerate(DEFAULT_TYPES, 1)]
+    return [{"key": r["key"], "title": r["title"]}
+            for r in sorted(rows, key=lambda r: r["order"]) if r.get("active", True)]
 DESC = ("Atlanta's comedy scene in one place: theaters and clubs, improv troupes, open mics, "
         "comedy classes, podcasts and festivals, inside and outside the Perimeter.")
 
@@ -83,10 +95,11 @@ def prerender(data):
     items = data["items"]
     parts = [NAV + '<header class="mast"><div class="wrap">'
              '<h1>Atlanta Comedy <span>Directory</span></h1>'
-             "<p class=\"lede\">A guide to Atlanta comedy for smart, sexy people who don’t like to think. We picked out the best shows, classes, and festivals so your beautiful, empty head doesn't have to. Brought to you by Dynamic El Dorado and some random people who gave us random drugs. If you're ugly, please stop reading this. If you're dumb, we would love some comp tickets to your show.</p>"
+             "<p class=\"lede\">A directory of Atlanta comedy: venues, troupes, performers, podcasts, classes, open mics, and festivals. Curated by Dynamic El Dorado.</p>"
              f'<div class="mast-meta"><span>{len(items)} listings</span><span>Last updated {e(data.get("updated") or "—")}</span></div>'
              '</div></header><main><div class="wrap"><div id="results">']
-    for key, label in TYPES:
+    for sec in data["sections"]:
+        key, label = sec["key"], sec["title"]
         group = sorted((i for i in items if i.get("type") == key), key=lambda i: i["name"].lower())
         if not group:
             continue
@@ -132,6 +145,10 @@ def seo_head(data):
 def main():
     src = PAGE.read_text(encoding="utf-8")
     data = json.loads(re.search(r'<script type="application/json" id="dir-data">(.*?)</script>', src, re.S).group(1))
+    data["sections"] = load_sections()
+    data_json = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
+    src = re.sub(r'(<script type="application/json" id="dir-data">).*?(</script>)',
+                 lambda m: m.group(1) + data_json + m.group(2), src, count=1, flags=re.S)
 
     # 1. SEO tags in <head> (replace an earlier run, or insert before </head>)
     src = re.sub(r"<!--seo:start-->.*?<!--seo:end-->", "", src, flags=re.S)
