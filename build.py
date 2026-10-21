@@ -100,7 +100,8 @@ def prerender(data):
              '</div></header><main><div class="wrap"><div id="results">']
     for sec in data["sections"]:
         key, label = sec["key"], sec["title"]
-        group = sorted((i for i in items if i.get("type") == key), key=lambda i: i["name"].lower())
+        group = sorted((i for i in items if i.get("type") == key),
+                       key=lambda i: ((i.get("next") is None), i.get("next") or "", i["name"].lower()) if key == "show" else i["name"].lower())
         if not group:
             continue
         parts.append(f'<section class="group"><div class="grid"><h2>{e(label)} <small>{len(group)}</small></h2>')
