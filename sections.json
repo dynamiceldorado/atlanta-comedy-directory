@@ -1,10 +1,50 @@
 [
-  {"key": "venue",     "order": 1, "title": "Theaters & clubs",      "active": true},
-  {"key": "show",      "order": 2, "title": "Shows & troupes",       "active": true},
-  {"key": "openmic",   "order": 3, "title": "Open mics & jams",      "active": true},
-  {"key": "classes",   "order": 4, "title": "Classes & schools",     "active": true},
-  {"key": "podcast",   "order": 5, "title": "Podcasts",              "active": true},
-  {"key": "festival",  "order": 6, "title": "Festivals",             "active": true},
-  {"key": "performer", "order": 7, "title": "Performers",            "active": true},
-  {"key": "resource",  "order": 8, "title": "Calendars & resources", "active": true}
+  {
+    "key": "venue",
+    "order": 1,
+    "title": "Theaters & clubs",
+    "active": true
+  },
+  {
+    "key": "show",
+    "order": 2,
+    "title": "Shows",
+    "active": true
+  },
+  {
+    "key": "openmic",
+    "order": 3,
+    "title": "Practice Sessions",
+    "active": true
+  },
+  {
+    "key": "classes",
+    "order": 4,
+    "title": "Classes, Workshops & Schools",
+    "active": true
+  },
+  {
+    "key": "performer",
+    "order": 5,
+    "title": "Performers",
+    "active": true
+  },
+  {
+    "key": "festival",
+    "order": 6,
+    "title": "Festivals",
+    "active": true
+  },
+  {
+    "key": "podcast",
+    "order": 7,
+    "title": "Podcasts",
+    "active": true
+  },
+  {
+    "key": "resource",
+    "order": 8,
+    "title": "Calendars & resources",
+    "active": true
+  }
 ]

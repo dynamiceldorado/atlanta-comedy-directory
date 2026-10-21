@@ -17,7 +17,7 @@ jobs:
       - name: Pull sections from the Comedy Database sheet
         env:
           SECTIONS_CSV_URL: ${{ vars.SECTIONS_CSV_URL }}
-        run: python3 sync_sections.py
+        run: python3 sync_sections.py directory
 
       - name: Rebuild the directory
         run: python3 build.py
