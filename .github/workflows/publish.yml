@@ -1,0 +1,46 @@
+name: Publish Directory
+
+# The robot publisher. The Comedy Database sheet pushes data/listings.csv and
+# data/sections.csv here (Apps Script inside the sheet). This workflow rebuilds the page.
+on:
+  push:
+    paths: ["data/**"]
+  schedule:
+    - cron: "23 10 * * *"   # daily, keeps "next show" order current
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sheet listings into the page
+        run: |
+          if [ -f data/listings.csv ]; then python3 sync_listings.py data/listings.csv; fi
+
+      - name: Sheet section titles and order
+        run: |
+          if [ -f data/sections.csv ]; then python3 sync_sections.py directory data/sections.csv; fi
+
+      - name: Rebuild static copy
+        run: python3 build.py
+
+      - name: Commit and push if anything changed
+        run: |
+          git config user.name "Dynamic El Dorado robot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A index.html sections.json sitemap.xml robots.txt
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Robot publish $(TZ=America/New_York date +%F)"
+            git push
+          fi
