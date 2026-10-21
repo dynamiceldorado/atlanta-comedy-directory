@@ -1,32 +1,20 @@
 [
   {
-    "key": "venue",
-    "order": 1,
-    "title": "Venues",
-    "active": true
-  },
-  {
     "key": "show",
-    "order": 2,
+    "order": 0,
     "title": "Shows",
-    "active": true
-  },
-  {
-    "key": "openmic",
-    "order": 3,
-    "title": "Practice Sessions",
     "active": true
   },
   {
     "key": "classes",
     "order": 4,
-    "title": "Classes, Workshops & Schools",
+    "title": "Education",
     "active": true
   },
   {
-    "key": "performer",
+    "key": "openmic",
     "order": 5,
-    "title": "Performers",
+    "title": "Practice Sessions",
     "active": true
   },
   {
@@ -45,6 +33,18 @@
     "key": "resource",
     "order": 8,
     "title": "Calendars & resources",
+    "active": true
+  },
+  {
+    "key": "performer",
+    "order": 9,
+    "title": "Performers",
+    "active": true
+  },
+  {
+    "key": "venue",
+    "order": 11,
+    "title": "Venues",
     "active": true
   }
 ]
