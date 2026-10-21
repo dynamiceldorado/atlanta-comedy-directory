@@ -28,14 +28,22 @@ DEFAULT_TYPES = [("venue", "Theaters & clubs"), ("show", "Shows & troupes"), ("o
                  ("performer", "Performers"), ("resource", "Calendars & resources")]
 
 
+# Oct 21 2026: sections are listed A to Z on the page, whatever order the sheet gives.
+# Set to False to go back to the order in sections.json (Shows first, Venues last).
+ALPHABETICAL_SECTIONS = True
+
+
 def load_sections():
     path = ROOT / "sections.json"
     if path.exists():
         rows = json.loads(path.read_text(encoding="utf-8"))
     else:
         rows = [{"key": k, "order": n, "title": t, "active": True} for n, (k, t) in enumerate(DEFAULT_TYPES, 1)]
-    return [{"key": r["key"], "title": r["title"]}
+    secs = [{"key": r["key"], "title": r["title"]}
             for r in sorted(rows, key=lambda r: r["order"]) if r.get("active", True)]
+    if ALPHABETICAL_SECTIONS:
+        secs.sort(key=lambda s: s["title"].lower())
+    return secs
 DESC = ("Atlanta's comedy scene in one place: theaters and clubs, improv troupes, open mics, "
         "comedy classes, podcasts and festivals, inside and outside the Perimeter.")
 
@@ -104,9 +112,9 @@ def prerender(data):
                        key=lambda i: ((i.get("next") is None), i.get("next") or "", i["name"].lower()) if key == "show" else i["name"].lower())
         if not group:
             continue
-        parts.append(f'<section class="group"><div class="grid"><h2>{e(label)} <small>{len(group)}</small></h2>')
+        parts.append(f'<details class="group" data-key="{e(key)}"><summary><h2>{e(label)} <small>{len(group)}</small></h2></summary><div class="grid">')
         parts.extend(card(i) for i in group)
-        parts.append("</div></section>")
+        parts.append("</div></details>")
     parts.append('</div><section class="suggest"><h2>Suggest a listing</h2>'
                  '<p>Run a show, a mic, a troupe, a class or a podcast? Performing in Atlanta and want to be listed? '
                  f'<a href="{FORM}">Got a thing we should add here? Let us know about it!</a></p></section>'
