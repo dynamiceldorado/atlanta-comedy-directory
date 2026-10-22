@@ -39,7 +39,7 @@
     "key": "performer",
     "order": 10,
     "title": "Performers",
-    "active": false
+    "active": true
   },
   {
     "key": "venue",
