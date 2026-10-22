@@ -30,7 +30,7 @@ DEFAULT_TYPES = [("venue", "Theaters & clubs"), ("show", "Shows & troupes"), ("o
 
 # Oct 21 2026: sections are listed A to Z on the page, whatever order the sheet gives.
 # Set to False to go back to the order in sections.json (Shows first, Venues last).
-ALPHABETICAL_SECTIONS = True
+ALPHABETICAL_SECTIONS = False
 
 
 def load_sections():
