@@ -1,49 +1,49 @@
 [
   {
     "key": "show",
-    "order": 0,
+    "order": 1,
     "title": "Shows",
     "active": true
   },
   {
     "key": "classes",
-    "order": 4,
+    "order": 5,
     "title": "Education",
     "active": true
   },
   {
     "key": "openmic",
-    "order": 5,
+    "order": 6,
     "title": "Practice",
     "active": true
   },
   {
     "key": "festival",
-    "order": 6,
+    "order": 7,
     "title": "Festivals",
     "active": true
   },
   {
     "key": "podcast",
-    "order": 7,
+    "order": 8,
     "title": "Podcasts",
     "active": true
   },
   {
     "key": "resource",
-    "order": 8,
+    "order": 9,
     "title": "Other Resources",
     "active": true
   },
   {
     "key": "performer",
-    "order": 9,
+    "order": 10,
     "title": "Performers",
     "active": true
   },
   {
     "key": "venue",
-    "order": 11,
+    "order": 12,
     "title": "Venues",
     "active": true
   }
