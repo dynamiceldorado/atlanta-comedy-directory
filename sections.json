@@ -14,7 +14,7 @@
   {
     "key": "openmic",
     "order": 5,
-    "title": "Practice Sessions",
+    "title": "Practice",
     "active": true
   },
   {
@@ -32,7 +32,7 @@
   {
     "key": "resource",
     "order": 8,
-    "title": "Calendars & resources",
+    "title": "Other Resources",
     "active": true
   },
   {
