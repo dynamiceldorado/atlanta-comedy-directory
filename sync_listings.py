@@ -37,7 +37,9 @@ def compose(row, by_id):
     hood = g(row, "neighborhood") or g(venue, "neighborhood")
     out = {}
     if any(g(row, k) for k in SPLIT_WHERE):
-        when = " ".join(x for x in (g(row, "schedule"), g(row, "start_time")) if x)
+        sch, t = g(row, "schedule"), g(row, "start_time")
+        # "Tuesdays 8:00 PM" but "Fri Nov 20 · 9:00 PM" (a date next to a time needs the dot)
+        when = (sch + (" · " if sch[-1:].isdigit() else " ") + t) if sch and t else (sch or t)
         place = ", ".join(x for x in (vname, addr) if x)
         out["where"] = " · ".join(x for x in (when, place, hood) if x)
     site = g(row, "website")
