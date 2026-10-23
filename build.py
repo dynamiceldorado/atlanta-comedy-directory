@@ -74,6 +74,11 @@ def card(it):
         out.append(f'<div class="tags">{"".join(tags)}</div>')
     if it.get("where"):
         out.append(f'<div class="where">{e(it["where"])}</div>')
+    if it.get("details"):
+        out.append(f'<div class="where">{e(it["details"])}</div>')
+    if it.get("links"):
+        a = " · ".join(f'<a href="{e(l["href"])}" target="_blank" rel="noopener">{e(l["label"])}</a>' for l in it["links"])
+        out.append(f'<div class="where">{a}</div>')
     if it.get("ig"):
         v = it["ig"]
         label = "Instagram" if v.startswith("http") else "@" + v.lstrip("@")

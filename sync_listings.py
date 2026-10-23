@@ -4,6 +4,16 @@
 
 Rewrites the dir-data block in index.html from the sheet. Rows with active = N are
 left out. On a bad read or bad rows, nothing is changed.
+
+SPLIT COLUMNS (Oct 23, 2026). The sheet can hold the old all-in-one columns
+(where, url, note) or the split ones below. Split columns win when filled; a row
+with them all blank still publishes from the old columns, so nothing breaks
+while rows are being converted.
+  WHERE  venue_name, venue_id (id of the venue's own Listings row), address, neighborhood
+  WHEN   schedule ("1st Saturdays"), start_time ("7:00 PM"), signup_time, next (YYYY-MM-DD)
+  MONEY  price_text
+  WHO    host
+  LINKS  website, tickets_url, facebook, performer_link (ig stays as it was)
 """
 import csv, io, json, pathlib, re, sys, urllib.request
 
@@ -12,6 +22,50 @@ PAGE = ROOT / "index.html"
 TYPES = {"venue", "show", "openmic", "classes", "podcast", "festival", "performer", "resource"}
 GENRES = {"clown", "burlesque", "standup", "improv", "sketch", "variety"}
 TEXT = ["name", "area", "where", "url", "note", "ig", "img", "alt", "next"]
+SPLIT_WHERE = ["venue_name", "venue_id", "address", "neighborhood", "schedule", "start_time"]
+
+
+def g(row, k):
+    return (row.get(k) or "").strip()
+
+
+def compose(row, by_id):
+    """Turn the split columns into the fields the page shows. Returns a dict of overrides."""
+    venue = by_id.get(g(row, "venue_id"), {})
+    vname = g(row, "venue_name") or g(venue, "name")
+    addr = g(row, "address") or g(venue, "address")
+    hood = g(row, "neighborhood") or g(venue, "neighborhood")
+    out = {}
+    if any(g(row, k) for k in SPLIT_WHERE):
+        when = " ".join(x for x in (g(row, "schedule"), g(row, "start_time")) if x)
+        place = ", ".join(x for x in (vname, addr) if x)
+        out["where"] = " · ".join(x for x in (when, place, hood) if x)
+    site = g(row, "website")
+    tickets = g(row, "tickets_url")
+    if site or tickets:
+        out["url"] = site or tickets
+    details = []
+    if g(row, "host"):
+        details.append("Hosted by " + g(row, "host"))
+    if g(row, "signup_time"):
+        details.append("Sign-up " + g(row, "signup_time"))
+    if g(row, "price_text"):
+        details.append(g(row, "price_text"))
+    if details:
+        out["details"] = " · ".join(details)
+    links = []
+    vsite = g(venue, "website") or g(venue, "url")
+    if vname and vsite and vsite != out.get("url"):
+        links.append({"label": vname, "href": vsite})
+    if tickets and tickets != out.get("url"):
+        links.append({"label": "Tickets", "href": tickets})
+    if g(row, "facebook"):
+        links.append({"label": "Facebook", "href": g(row, "facebook")})
+    if g(row, "performer_link"):
+        links.append({"label": "Performer", "href": g(row, "performer_link")})
+    if links:
+        out["links"] = links
+    return out
 
 
 def fetch(source):
@@ -23,6 +77,7 @@ def fetch(source):
 
 def parse(text):
     rows = list(csv.DictReader(io.StringIO(text)))
+    by_id = {g(r, "id"): r for r in rows if g(r, "id")}
     items, ids = [], set()
     for n, row in enumerate(rows, 2):
         if not (row.get("id") or "").strip():
@@ -50,6 +105,10 @@ def parse(text):
             v = (row.get(k) or "").strip()
             if v:
                 item[k] = v
+        vid = g(row, "venue_id")
+        if vid and vid not in by_id:
+            raise ValueError(f"row {n} ({iid}): venue_id '{vid}' is not an id in the Listings tab")
+        item.update(compose(row, by_id))
         items.append(item)
     if not items:
         raise ValueError("no active listings found")
