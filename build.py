@@ -8,9 +8,9 @@ It is idempotent. It rewrites three things in index.html, between marker comment
   1. SEO tags in <head>: title, description, canonical, Open Graph and a JSON-LD ItemList.
   2. A static copy of every listing inside <div id="dir-root">. The page script
      replaces it with the interactive version on load, so visitors see no change.
-  3. robots.txt and sitemap.xml next to index.html.
+  3. robots.txt, sitemap.xml and llms.txt (markdown copy for AI tools) next to index.html.
 """
-import html, json, re, pathlib, datetime
+import html, json, re, pathlib, datetime, hashlib
 
 ROOT = pathlib.Path(__file__).parent
 PAGE = ROOT / "index.html"
@@ -129,37 +129,89 @@ def prerender(data):
     return "".join(parts)
 
 
+SCHEMA_TYPES = {"venue": "PerformingArtsTheater", "classes": "EducationalOrganization",
+                "show": "Organization", "festival": "Organization", "podcast": "PodcastSeries"}
+OG_IMAGE = SITE + "og.png"
+
+
 def seo_head(data):
-    ld = {"@context": "https://schema.org", "@type": "ItemList", "name": "Atlanta Comedy Directory",
-          "description": DESC, "url": SITE, "numberOfItems": len(data["items"]),
-          "itemListElement": []}
+    publisher = {"@type": "Organization", "@id": "https://dynamiceldorado.com/#org", "name": "Dynamic El Dorado",
+                 "url": "https://dynamiceldorado.com/", "logo": SITE + "logo.png",
+                 "sameAs": ["https://www.instagram.com/dynamiceldorado/"]}
+    itemlist = {"@type": "ItemList", "@id": SITE + "#list", "name": "Atlanta Comedy Directory",
+                "numberOfItems": len(data["items"]), "itemListElement": []}
     for n, it in enumerate(sorted(data["items"], key=lambda i: i["name"].lower()), 1):
-        thing = {"@type": "Organization" if it.get("type") in ("venue", "classes", "show", "festival") else "Thing",
-                 "name": it["name"]}
+        thing = {"@type": SCHEMA_TYPES.get(it.get("type"), "Thing"), "name": it["name"]}
         if it.get("url"):
             thing["url"] = it["url"]
         if it.get("note"):
             thing["description"] = it["note"]
-        ld["itemListElement"].append({"@type": "ListItem", "position": n, "item": thing})
+        itemlist["itemListElement"].append({"@type": "ListItem", "position": n, "item": thing})
+    ld = {"@context": "https://schema.org", "@graph": [
+        publisher,
+        {"@type": "WebSite", "@id": SITE + "#site", "url": SITE, "name": "Atlanta Comedy Directory",
+         "inLanguage": "en-US", "publisher": {"@id": publisher["@id"]}},
+        {"@type": "CollectionPage", "@id": SITE + "#page", "url": SITE, "name": "Atlanta Comedy Directory",
+         "description": DESC, "inLanguage": "en-US", "dateModified": data.get("updated"),
+         "isPartOf": {"@id": SITE + "#site"}, "publisher": {"@id": publisher["@id"]},
+         "about": {"@type": "Place", "name": "Atlanta, Georgia"}, "mainEntity": {"@id": SITE + "#list"}},
+        itemlist]}
     ld_json = json.dumps(ld, ensure_ascii=False).replace("<", "\\u003c")
     return ("<!--seo:start-->"
             "<title>Atlanta Comedy Directory: Theaters, Open Mics, Classes &amp; Troupes</title>"
             f'<meta name="description" content="{e(DESC)}">'
             f'<link rel="canonical" href="{SITE}">'
+            '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">'
             '<meta property="og:type" content="website">'
+            '<meta property="og:locale" content="en_US">'
             '<meta property="og:title" content="Atlanta Comedy Directory">'
             f'<meta property="og:description" content="{e(DESC)}">'
             f'<meta property="og:url" content="{SITE}">'
             '<meta property="og:site_name" content="Dynamic El Dorado">'
-            '<meta name="twitter:card" content="summary">'
+            f'<meta property="og:image" content="{OG_IMAGE}">'
+            '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
+            '<meta property="og:image:alt" content="Atlanta Comedy Directory, by Dynamic El Dorado">'
+            '<meta name="twitter:card" content="summary_large_image">'
+            f'<meta name="twitter:image" content="{OG_IMAGE}">'
+            f'<link rel="alternate" type="text/markdown" href="{SITE}llms.txt" title="llms.txt">'
             f'<script type="application/ld+json">{ld_json}</script>'
             "<!--seo:end-->")
+
+
+def llms_txt(data):
+    """A plain-markdown copy of the directory for AI tools (llmstxt.org convention)."""
+    out = ["# Atlanta Comedy Directory", "",
+           f"> {DESC} Curated by Dynamic El Dorado, an Atlanta comedy arts incubator. "
+           f"{len(data['items'])} listings, last changed {data.get('updated')}.", "",
+           "Details change often: confirm dates and prices with the venue or organizer.", "",
+           "## Related", "",
+           f"- [Live Comedy Guide]({GUIDE}): what's on this weekend in Atlanta",
+           f"- [Dynamic El Dorado](https://dynamiceldorado.com/): the incubator behind this directory",
+           f"- [Suggest a listing]({FORM})", ""]
+    for sec in data["sections"]:
+        group = sorted((i for i in data["items"] if i.get("type") == sec["key"]), key=lambda i: i["name"].lower())
+        if not group:
+            continue
+        out += [f"## {sec['title']}", ""]
+        for i in group:
+            bits = [x for x in (i.get("where"), i.get("details"), i.get("note")) if x]
+            line = f"- [{i['name']}]({i['url']})" if i.get("url") else f"- {i['name']}"
+            if i.get("area"):
+                bits.insert(0, "Outside the Perimeter" if i["area"] == "OTP" else "Inside the Perimeter")
+            out.append(line + (": " + " | ".join(bits) if bits else ""))
+        out.append("")
+    return "\n".join(out)
 
 
 def main():
     src = PAGE.read_text(encoding="utf-8")
     data = json.loads(re.search(r'<script type="application/json" id="dir-data">(.*?)</script>', src, re.S).group(1))
     data["sections"] = load_sections()
+    # "Last updated" used to be frozen at 2026-10-17. Stamp today (US Eastern) only when listings or sections change.
+    fp = hashlib.sha256(json.dumps([data["items"], data["sections"]], sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
+    if data.get("fp") != fp:
+        data["fp"] = fp
+        data["updated"] = datetime.datetime.now(__import__("zoneinfo").ZoneInfo("America/New_York")).date().isoformat()
     today = datetime.datetime.now(__import__("zoneinfo").ZoneInfo("America/New_York")).date().isoformat()
     data["items"] = [dict(i, next=None) if i.get("next") and i["next"] < today else i for i in data["items"]]
     data_json = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
@@ -184,8 +236,9 @@ def main():
     (ROOT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        f"  <url><loc>{SITE}</loc><lastmod>{lastmod}</lastmod><changefreq>weekly</changefreq></url>\n"
+        f"  <url><loc>{SITE}</loc><lastmod>{lastmod}</lastmod></url>\n"
         "</urlset>\n", encoding="utf-8")
+    (ROOT / "llms.txt").write_text(llms_txt(data), encoding="utf-8")
     print(f"Pre-rendered {len(data['items'])} listings; updated {lastmod}")
 
 
