@@ -37,10 +37,24 @@ jobs:
         run: |
           git config user.name "Dynamic El Dorado robot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A index.html sections.json sitemap.xml robots.txt
+          git add -A index.html sections.json sitemap.xml robots.txt llms.txt
           if git diff --cached --quiet; then
             echo "No changes."
           else
             git commit -m "Robot publish $(TZ=America/New_York date +%F)"
             git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+        id: push
+
+      # Tell Bing, Yandex and other IndexNow engines the page changed (Bing feeds ChatGPT search and Copilot).
+      # Waits for GitHub Pages to deploy first. Never fails the publish.
+      - name: Ping IndexNow
+        if: steps.push.outputs.changed == 'true'
+        run: |
+          sleep 120
+          KEY=2fcde6fc282d388e20b1ce7cb7e2dc6b
+          curl -fsS -X POST https://api.indexnow.org/indexnow \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "{\"host\":\"directory.dynamiceldorado.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://directory.dynamiceldorado.com/$KEY.txt\",\"urlList\":[\"https://directory.dynamiceldorado.com/\",\"https://directory.dynamiceldorado.com/llms.txt\"]}" \
+            || echo "IndexNow ping failed (non-fatal)"
