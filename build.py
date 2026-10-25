@@ -160,6 +160,8 @@ def main():
     src = PAGE.read_text(encoding="utf-8")
     data = json.loads(re.search(r'<script type="application/json" id="dir-data">(.*?)</script>', src, re.S).group(1))
     data["sections"] = load_sections()
+    today = datetime.datetime.now(__import__("zoneinfo").ZoneInfo("America/New_York")).date().isoformat()
+    data["items"] = [dict(i, next=None) if i.get("next") and i["next"] < today else i for i in data["items"]]
     data_json = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
     src = re.sub(r'(<script type="application/json" id="dir-data">).*?(</script>)',
                  lambda m: m.group(1) + data_json + m.group(2), src, count=1, flags=re.S)
