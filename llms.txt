@@ -1,6 +1,6 @@
 # Atlanta Comedy Directory
 
-> Atlanta's comedy scene in one place: theaters and clubs, improv troupes, open mics, comedy classes, podcasts and festivals, inside and outside the Perimeter. Curated by Dynamic El Dorado, an Atlanta comedy arts incubator. 112 listings, last changed 2026-11-10.
+> Atlanta's comedy scene in one place: theaters and clubs, improv troupes, open mics, comedy classes, podcasts and festivals, inside and outside the Perimeter. Curated by Dynamic El Dorado, an Atlanta comedy arts incubator. 119 listings, last changed 2026-11-15.
 
 Details change often: confirm dates and prices with the venue or organizer.
 
@@ -12,9 +12,12 @@ Details change often: confirm dates and prices with the venue or organizer.
 
 ## Shows
 
+- Acting Under the Influence: Inside the Perimeter | Dates to be announced · Red Light Café, 553-1 Amsterdam Ave NE · Virginia-Highland | Drinking theater: the cast drinks when the audience tips, through cabarets and full-length parody plays like its Sweeney Todd.
 - [Best of Atlanta Comedy Showcase](https://laughingskulllounge.com/series/best-of-atlanta/): Inside the Perimeter | Thursday through Sunday Thu 8 · Fri 8 & 10:30 · Sat 5:30, 8 & 10:30 · Sun 7:30 PM · Laughing Skull Lounge, 878 Peachtree St NE · Midtown | $20 to $55, depending on the night and show | Local stand-up showcases at Laughing Skull Lounge, four nights a week.
+- Best of the Basement: Inside the Perimeter | Tuesdays 8:00 PM · Dark Horse Tavern, 816 N Highland Ave NE · Virginia-Highland | Hosted by 811Ponce | An intimate weekly stand-up showcase. Ages 21 and up.
 - [Black Voices Unscripted](https://www.wholeworldtheatre.com/series/black-voices-unscripted/): Inside the Perimeter | Dates to be announced 10:00 PM · Whole World Improv Theatre, 1216 Spring St NW · Midtown | A late-night improv show at Whole World.
 - [BlackGround](https://www.dadsgarage.com/shows): Inside the Perimeter | Dates to be announced 8:00 PM · Dad's Garage, 569 Ezzard St SE · Old Fourth Ward | Dad's Garage's Black improv ensemble, the spiritual successor to Dark Side of the Room. Its newer cohort performs as BlackGround NXT.
+- [Comedy Night with Quietly Unhinged](https://thestoutbrothers.com/smyrna/): Outside the Perimeter | 1st and 3rd Tuesdays 8:00 PM · The Stout Brothers, 1265 W Spring St, Suite D · Smyrna | Hosted by Quietly Unhinged Productions | Stand-up night with a rotating lineup of seasoned comics.
 - [Comedy on the Square](https://www.alleystage.org/events/118706): Outside the Perimeter | Fridays & Saturdays 8:00 PM · The Alley Stage, 11 Anderson St SE · Marietta Square | Weekend comedy at the Alley Stage on Marietta Square. Listed Oct 23 through Dec 26.
 - [Dentata](https://www.crowdwork.com/e/dentata-nov2026): Inside the Perimeter | Fri Nov 20 · 9:00 PM · React Theatre, 572 Edgewood Ave SE · Old Fourth Ward | $20, or $30 with TRAD | A clown and bouffon solo show by Julia VanderVeen, presented by Dynamic El Dorado. Contains nudity. 18+.
 - [Direct Depozit](https://www.eventbrite.com/e/direct-depozit-presents-scared-money-improv-show-tickets-1998396153691): Inside the Perimeter | Metropolitan Studios, 1259 Metropolitan Ave SE, Atlanta | An improv comedy group that plays shows at Metropolitan Studios, including its Halloween-themed Scared Money Improv Show. Tickets are through Eventbrite.
@@ -23,11 +26,13 @@ Details change often: confirm dates and prices with the venue or organizer.
 - [DrunkProv](https://www.alleystage.org/events/135345): Outside the Perimeter | Select Wednesdays · The Alley Stage, 11 Anderson St SE · Marietta Square | A monthly improv night at the Alley Stage. Check the venue calendar for dates.
 - [Felt Street](https://www.dadsgarage.com/shows): Inside the Perimeter | Saturdays 8:00 PM · Dad's Garage, 569 Ezzard St SE · Old Fourth Ward | A Saturday-night show at Dad's Garage.
 - [Funny Bus ATL](https://www.funnybus.net/atlanta): Inside the Perimeter | Departs near the Margaret Mitchell House, 945 Crescent Ave NE · Midtown | Hosted by Gary Sammons · From $40 | A comedy city tour on a bus, hosted by local comedians. BYOB.
+- House of Flops: Inside the Perimeter | Monthly | Hosted by Adrian Barrera | A circus in a bar. Physical comedians, clowns and odd-skills performers risk brand-new material for a small, devoted crowd. Performers can message for a spot.
 - [Joy Deficit](https://redlightcafe.com/events/joy-deficit-monthly-live-performance-event-oct-26-2026): Inside the Perimeter | Monthly, Mon 7:30 PM · Red Light Café, 553-1 Amsterdam Ave NE · Virginia-Highland | No cover | A monthly live performance night for Chaotic Good, with a changing roster: live literature, slam poetry, puppetry, music and comedy. No cover, free parking, and tips for performers are welcome. Doors 7 PM.
 - [Maestro](https://www.dadsgarage.com/shows): Inside the Perimeter | Wednesdays 8:00 PM · Dad's Garage, 569 Ezzard St SE · Old Fourth Ward | A Wednesday-night improv show at Dad's Garage.
 - [Monster Show For Monsters](https://redlightcafe.com/events/monster-show-for-monsters-variety-show-nov-16-2026): Inside the Perimeter | Mon Nov 16 · 8:00 PM · Red Light Café, 553-1 Amsterdam Ave NE · Virginia-Highland | $15 advance, $20 at the door, $30 VIP | An alternate-reality variety show with music, comedy, burlesque, drag, storytelling and magic, all performed by monsters. Doors 7 PM. 18+.
 - [MovieProv](https://www.alleystage.org/events/135348): Outside the Perimeter | Third Wednesdays 8:00 PM · The Alley Stage, 11 Anderson St SE · Marietta Square | Improvised films, created live on stage.
 - [Narsty!](https://www.dadsgarage.com/shows): Inside the Perimeter | Saturdays 10:00 PM · Dad's Garage, 569 Ezzard St SE · Old Fourth Ward | A late-night Saturday show at Dad's Garage.
+- Potential Spam Comedy: Inside the Perimeter | Dates to be announced | Atlanta sketch team whose cast writes and produces every sketch, from musical numbers to absurd bits. It played the 2026 Atlanta Fringe Festival.
 - [Prime Time](https://www.wholeworldtheatre.com/series/prime-time/): Inside the Perimeter | Sat Oct 31 · 10:00 PM · Whole World Improv Theatre, 1216 Spring St NW · Midtown | A late-night improv show at Whole World.
 - Rotknee Presents Monday Night Comedy: Inside the Perimeter | Mondays 9:30 PM–midnight · Star Community Bar · Little Five Points | Free | A free Monday-night comedy show.
 - [Sad Boys in Harpy Land](https://www.eventbrite.com/e/alex-tatarskys-sad-boys-in-harpy-land-tickets-2002387973331): Inside the Perimeter | Nov 28–29, Sat 7:30 PM · Vesper Theatre, 2823 Church St · East Point | An unhinged solo clown show by experimental clown artist Alex Tatarsky: sad clown meets demented cabaret in a falling-apart coming-of-age story. Presented by Motherlode Theater. Nov 28 and 29, $25. Under 16 only with a parent or guardian.
@@ -40,6 +45,7 @@ Details change often: confirm dates and prices with the venue or organizer.
 - [The Tipsy Zone](https://thetipsyzone.com): Inside the Perimeter | First Fridays 8:00 PM · Red Light Café, 553-1 Amsterdam Ave NE · Virginia-Highland | $15 in advance, $20 at the door; a 2026 season pass is $60 | An 18+ improv troupe doing a Twilight Zone-style improvised show with a boozy twist.
 - [Thursday Happy Hour](https://www.wholeworldtheatre.com/series/thursday-happy-hour/): Inside the Perimeter | Thursdays 8:00 PM · Whole World Improv Theatre, 1216 Spring St NW · Midtown | A Thursday-night improv show at Whole World.
 - [TRAD](https://www.crowdwork.com/e/trad): Inside the Perimeter | Fri Nov 20 · 7:30 PM · React Theatre, 572 Edgewood Ave SE · Old Fourth Ward | $20, or $30 with DENTATA | A clown and bouffon solo show by Hannah Mitchell, presented by Dynamic El Dorado. 18+.
+- [Uptown Comedy Corner](https://www.uptowncomedy.net/): Outside the Perimeter | Mon, Fri and Sat nights · Forest Park and other locations | Atlanta's original Uptown Comedy Corner, now a roving brand. It runs weekly stand-up showcases, including a Monday night showcase in Forest Park. Each show lists its own location.
 - [Y'all's Line is it Anyway?](https://www.alleystage.org/events/135346): Outside the Perimeter | First Wednesdays · The Alley Stage, 11 Anderson St SE · Marietta Square | A monthly improv night at the Alley Stage.
 - [You're Invited!](https://www.dadsgarage.com/shows): Inside the Perimeter | Thursdays 8:00 PM · Dad's Garage, 569 Ezzard St SE · Old Fourth Ward | A Thursday-night show at Dad's Garage.
 
@@ -137,6 +143,7 @@ Details change often: confirm dates and prices with the venue or organizer.
 - [Relapse Comedy · Comedy City](https://relapsecomedy.com/Home): Inside the Perimeter | Atlanta | Relapse Theatre's Comedy City booking platform for showtime slots, with a Relapse University class program.
 - [The Alley Stage](https://www.alleystage.org): Outside the Perimeter | 11 Anderson St SE · Marietta Square | Weekend comedy, a Tuesday open mic, monthly improv nights, and stand-up, improv and sketch classes.
 - [The Punchline](https://www.punchline.com): Inside the Perimeter | 3652 Roswell Rd NE · Buckhead | Classic stand-up club with nightly shows. Also home to Jeff Justice's Comedy Workshoppe classes.
+- [The Stout Brothers (Smyrna)](https://thestoutbrothers.com/smyrna/): Outside the Perimeter | 1265 W Spring St, Suite D · Smyrna | Smyrna beer market and bar. It hosts Quietly Unhinged's Tuesday comedy nights.
 - [The Supermarket](https://www.thesupermarketatl.com/): Inside the Perimeter | 638 N Highland Ave NE · Poncey-Highland | A DIY arts venue on Atlanta's Eastside that hosts comedy and other live shows. Check its calendar for comedy nights.
 - Tucker Brewing Company: Outside the Perimeter | 2003 S Bibb Dr · Tucker | A brewery that hosts occasional stand-up nights and comedy fundraisers.
 - [Whiplash Comedy](https://www.whiplashcomedy.com/): Inside the Perimeter | 650 North Ave NE, Ste S201 · Ponce City Market · Old Fourth Ward | A comedy club above City Winery at Ponce City Market, opened October 12, 2026 by the former operator of Laughing Skull Lounge.
